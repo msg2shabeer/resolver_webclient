@@ -1,19 +1,49 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+	
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
+	
 	<!-- Font Awesome -->
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	
 	<!-- w3css -->
 	<link rel="stylesheet" href="css/w3.css">
+	
+	<!-- Custom CSS -->
+	<link rel="stylesheet" href="css/resolver.css">
+	
 	<!-- jQuery -->
 	<script type="text/javascript" src="js/jquery-3.1.1.min.js"></script>
 	<title>Resolver</title>
+
 </head>
-<body>
+
+<body class="w3-gray">
+
+	<header class="w3-container w3-teal">
+		<i class="fa fa-cogs w3-xlarge w3-margin w3-left" aria-hidden="true"></i>
+		<h3 class="w3-left">Resolver</h3>
+	</header>
+	
+	<div class="w3-container w3-black w3-center w3-padding">
+		<i id="menu-complaints" class="fa fa-envelope-o w3-xlarge w3-margin-right" aria-hidden="true"></i>
+		<i id="menu-customers" class="fa fa-address-book-o w3-xlarge w3-margin-right" aria-hidden="true"></i>
+	</div>
+	
+	<!-- Complaints page -->
+	<div id="page-complaints">
+		complaints loads here
+	</div>
+
+	<!-- Customers -->
+	<div id="page-customers">
+		customers loads here
+	</div>
 	
 	<!-- custom js -->
 	<script type="text/javascript" src="js/resolver.js"></script>
+
 </body>
 </html>
