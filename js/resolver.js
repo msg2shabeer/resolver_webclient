@@ -6,21 +6,38 @@ $(function(){
 		'page-customers'
 	];
 
+	// Home page
+	var homePage 		=	'page-complaints';
+	function showHomePage(){
+		$('#'+homePage).show();
+	}
+
 	// hide all pages function
 	function hideAllPages(){
 		$.each(pages, function(i, spage){
-			$('#'+spage).css("display","none");
+			$('#'+spage).hide();
+			$('#'+spage).height(window.innerHeight);
 		});
 	}
 
 	// hide all pages
 	hideAllPages();
 	
+	// Show home page
+	showHomePage();
+
 	// Show purticular page
 	function loadPage(page){
 		hideAllPages();
-		$('#'+page).css("display","block");
+		$('#'+page).show();
 	}
+
+	// home page controlls
+	var midPoint = window.innerWidth/2;
+	var midPoint2 = window.innerHeight - 75;
+	$('#btnAddComplaint').css({position: 'fixed', right: midPoint+'px', top: midPoint2+'px'});
+	
+	
 
 	// menu actions
 	$('#menu-complaints').click(function(){
