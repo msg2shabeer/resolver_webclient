@@ -12,7 +12,7 @@
 		<script src="http://ajax.aspnetcdn.com/ajax/jquery/jquery-1.9.0.js"></script>
 		<script src="http://ajax.aspnetcdn.com/ajax/knockout/knockout-2.2.1.js"></script>
 	</head>
-	<body class="w3-white">
+	<body class="w3-light-gray">
 	
 	<header class="w3-container w3-teal">
 		<i class="fa fa-cogs w3-xlarge w3-margin w3-left" aria-hidden="true"></i>
@@ -24,15 +24,18 @@
 		<i id="menu-customers" class="fa fa-address-book-o w3-xlarge w3-margin-right menuIcon" aria-hidden="true"></i>
 	</div>
 
+	<!-- main page complaints loads here -->
 	<div id="main" class="w3-light-gray">
-
 
 		<!-- ko foreach: complaints -->
 		<div class="w3-card-4 w3-white w3-margin">
 			<header class="w3-container">
-				<h3 class="w3-left w3-text-teal"  data-bind="text: description"></h3>
+				<h3 class="w3-left w3-text-teal">
+					<span data-bind="text: service"></span> - 
+					<span data-bind = "text:complaint_type"></span>
+				</h3>
 				<div class="w3-right w3-padding-8">
-					<div class="w3-small w3-text-brown">05/03/2017 09:45 PM</div>
+					<div class="w3-small w3-text-brown" data-bind="text: date_time"></div>
 					<div class="w3-right">
 						<i class="fa fa-star w3-text-yellow" aria-hidden="true"></i>
 						<i class="fa fa-star w3-text-yellow" aria-hidden="true"></i>
@@ -45,10 +48,12 @@
 			<div class="w3-container w3-padding w3-text-brown">
 				<div class="w3-left">
 					<i class="fa fa-user w3-text-gray" aria-hidden="true"></i>
-					<span data-bind="text: title"></span>
-					<i class="fa fa-phone w3-text-gray" aria-hidden="true"></i> Customer phone
-					<br />
-					<i class="fa fa-address-card w3-text-gray" aria-hidden="true"></i> Customer address
+					<span data-bind="text: cust_name"></span>
+					<i class="fa fa-phone w3-text-gray" aria-hidden="true"></i>
+					<span data-bind="text: complaint_phone"></span>
+					<br>
+					<i class="fa fa-address-card w3-text-gray" aria-hidden="true"></i>
+					<span data-bind="text:cust_address"></span>
 				</div>
 				<div class="w3-right">
 					<a href="#" data-bind="click: $parent.markDone"><i class="fa fa-check-circle w3-text-green w3-right w3-xxxlarge" aria-hidden="true"></i></a>
@@ -58,52 +63,33 @@
 		<!-- /ko -->
 		
 		<a id="btnAddComplaint" class="w3-btn-floating-large w3-teal w3-center" data-bind="click: beginAdd">+</a>
-
 	</div>
-	<script type="text/javascript">
 
-		function ComplaintsViewModel() {
-		var self = this;
-		self.complaintsURI = 'http://localhost:5000/complaints/';
-		self.complaints = ko.observableArray();
+	<!-- complaint posting window -->
+	<div id="addComplaintModel" class="w3-modal">
+		<div class="w3-modal-content">
+			<header class="w3-container w3-blue">
+				<span id="clsmodelAddComplaint" class="w3-closebtn">&times;</span>
+				<h3>Complaint Details</h3>
+			</header>
+			<div class="w3-content">
+				
+			</div>
+			<footer class="w3-light-gray w3-container w3-padding">
+				<button class="w3-btn w3-green w3-right">Save</button>
+			</footer>
+		</div>
+	</div>
 
-		self.ajax = function(uri, method, data) {
-			var request = {
-				url: uri,
-				type: method,
-				contentType: "application/json",
-				accepts: "application/json",
-				cache: false,
-				dataType: 'jsonp',
-				data: JSON.stringify(data),
-				beforeSend: function (xhr) {
-				},
-				error: function(jqXHR) {
-					console.log("ajax error " + jqXHR.status);
-				}
-			};
-			return $.ajax(request);
-		}
+	<script src="js/resolver.js"></script>
+	<script>
+		$(function(){
 
-		self.beginAdd = function() {
-			alert("Add");
-		}
-
-		self.markDone = function(task) {
-			task.done(true);
-		}
-
-		self.ajax(self.complaintsURI, 'GET').done(function(data) {
-			for (var i = 0; i < data.complaints.length; i++) {
-				self.complaints.push({
-					title: ko.observable(data.complaints[i].cust_name),
-					description: ko.observable(data.complaints[i].cust_address),
-				});
-			}
+			// close add complaint model
+			$("#clsmodelAddComplaint").click(function(){
+				$("#addComplaintModel").hide();
+			});
 		});
-
-	}
-	ko.applyBindings(new ComplaintsViewModel(), $('#main')[0]);
 	</script>
 </body>
 </html>
