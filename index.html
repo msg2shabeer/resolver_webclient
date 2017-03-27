@@ -9,8 +9,8 @@
 
 		<!-- w3css -->
 		<link rel="stylesheet" href="css/w3.css">
-		<script src="http://ajax.aspnetcdn.com/ajax/jquery/jquery-1.9.0.js"></script>
-		<script src="http://ajax.aspnetcdn.com/ajax/knockout/knockout-2.2.1.js"></script>
+		<script src="js/jquery-3.1.1.min.js"></script>
+		<script src="js/knockout-3.2.0.js"></script>
 	</head>
 	<body class="w3-light-gray">
 	
@@ -26,74 +26,84 @@
 
 	<!-- main page complaints loads here -->
 	<div id="main" class="w3-light-gray">
-
-		<!-- ko foreach: complaints -->
-		<div class="w3-card-4 w3-white w3-margin">
-			<header class="w3-container">
-				<h3 class="w3-left w3-text-teal">
-					<span data-bind="text: service"></span> - 
-					<span data-bind = "text:complaint_type"></span>
-				</h3>
-				<div class="w3-right w3-padding-8">
-					<div class="w3-small w3-text-brown" data-bind="text: date_time"></div>
+		<div data-bind="foreach: complaints">
+			<div class="w3-card-4 w3-white w3-margin">
+				<header class="w3-container">
+					<!-- <h3 class="w3-left w3-text-teal">
+						<span data-bind="text: service_id"></span> - 
+						<span data-bind = "text:complaint_type_id"></span>
+					</h3> -->
+					<!-- <div class="w3-right w3-padding-8">
+						<div class="w3-right">
+							<i class="fa fa-star w3-text-yellow" aria-hidden="true"></i>
+							<i class="fa fa-star w3-text-yellow" aria-hidden="true"></i>
+							<i class="fa fa-star w3-text-yellow" aria-hidden="true"></i>
+							<i class="fa fa-star w3-text-gray" aria-hidden="true"></i>
+							<i class="fa fa-star w3-text-gray" aria-hidden="true"></i>
+						</div>
+					</div> -->
+				</header>
+				<div class="w3-container w3-padding w3-text-brown">
+					<div class="w3-left">
+						<i class="fa fa-user w3-text-gray" aria-hidden="true"></i>
+						<span data-bind="text: cust_id" class="w3-margin-right"></span>
+						<i class="fa fa-user w3-text-gray" aria-hidden="true"></i>
+						<span data-bind="text: cust_name" class="w3-margin-right"></span>
+						<i class="fa fa-user w3-text-gray" aria-hidden="true"></i>
+						<span data-bind="text: cust_phone" class="w3-margin-right"></span>
+						<br>
+						<i class="fa fa-address-card w3-text-gray" aria-hidden="true"></i>
+						<span data-bind="text:cust_address"></span>
+					</div>
 					<div class="w3-right">
-						<i class="fa fa-star w3-text-yellow" aria-hidden="true"></i>
-						<i class="fa fa-star w3-text-yellow" aria-hidden="true"></i>
-						<i class="fa fa-star w3-text-yellow" aria-hidden="true"></i>
-						<i class="fa fa-star w3-text-gray" aria-hidden="true"></i>
-						<i class="fa fa-star w3-text-gray" aria-hidden="true"></i>
+						<a href="#"><i class="fa fa-check-circle w3-text-green w3-right w3-xxxlarge" aria-hidden="true"></i></a>
 					</div>
 				</div>
-			</header>
-			<div class="w3-container w3-padding w3-text-brown">
-				<div class="w3-left">
-					<i class="fa fa-user w3-text-gray" aria-hidden="true"></i>
-					<span data-bind="text: cust_name"></span>
-					<i class="fa fa-phone w3-text-gray" aria-hidden="true"></i>
-					<span data-bind="text: complaint_phone"></span>
-					<br>
-					<i class="fa fa-address-card w3-text-gray" aria-hidden="true"></i>
-					<span data-bind="text:cust_address"></span>
-				</div>
-				<div class="w3-right">
-					<a href="#" data-bind="click: $parent.markDone"><i class="fa fa-check-circle w3-text-green w3-right w3-xxxlarge" aria-hidden="true"></i></a>
-				</div>
 			</div>
 		</div>
-		<!-- /ko -->
+
 		
-		<a id="btnAddComplaint" class="w3-btn-floating-large w3-teal w3-center" data-bind="click: beginAdd">+</a>
+		<a id="btnAddComplaint" class="w3-btn-floating-large w3-teal w3-center">+</a>
+
+		<!-- complaint posting window -->
+		<div id="addComplaintModel" class="w3-modal">
+			<div class="w3-modal-content">
+				<header class="w3-container w3-blue">
+					<span id="clsmodelAddComplaint" class="w3-closebtn">&times;</span>
+					<h3>Complaint Details</h3>
+				</header>
+				<div class="w3-container">
+					<br>
+					<label for="" class="w3-label">Customer ID</label>
+					<input type="text" name="customer_id" class="w3-input" data-bind="value:cust_id"><br>
+					<label for="" class="w3-label">Customer Name</label>
+					<input type="text" name="customer_name" class="w3-input" data-bind="value:cust_name"><br>
+					<label for="" class="w3-label">Customer Address</label>
+					<input type="text" name="customer_add" class="w3-input" data-bind="value:cust_address"><br>
+					<label for="" class="w3-label">Customer Phone</label>
+					<input type="text" name="customer_phone" class="w3-input" data-bind="value:cust_phone"><br>
+					<!--<label for="" class="w3-label">Service</label>
+					 <select name="service_id" id="service_id" class="w3-select w3-white" data-bind = "options: services, optionsText: 'name', optionsValue: 'id',optionsCaption: 'Chooose Any'"></select> 
+					<br><br>
+					<label for="" class="w3-label">Complaint type</label>
+					 <select name="complaint_type_id" id="complaint_type_id" class="w3-select w3-white" data-bind = "options: complaintTypes, optionsText: 'name', optionsValue: 'id', optionsCaption: 'Choose Any'"></select> -->
+					<br><br>
+				</div>
+				<footer class="w3-light-gray w3-container w3-padding">
+					<button class="w3-btn w3-green w3-right" data-bind="click:addComplaint">Save</button>
+				</footer>
+			</div>
+		</div>
 	</div>
 
-	<!-- complaint posting window -->
-	<div id="addComplaintModel" class="w3-modal">
-		<div class="w3-modal-content">
-			<header class="w3-container w3-blue">
-				<span id="clsmodelAddComplaint" class="w3-closebtn">&times;</span>
-				<h3>Complaint Details</h3>
-			</header>
-			<div class="w3-container">
-				<br>
-				<label for="" class="w3-label">Service</label>
-				<select name="service_id" id="" class="w3-select w3-white">
-					<option value="1">Service 1</option>
-				</select><br><br>
-				<label for="" class="w3-label">Complaint type</label>
-				<select name="complaint_type_id" id="" class="w3-select w3-white">
-					<option value="1">Complaint type 1</option>
-				</select><br><br>
-				<label for="" class="w3-label">Customer ID</label>
-				<input type="text" name="customer_id" class="w3-input">
-			</div>
-			<footer class="w3-light-gray w3-container w3-padding">
-				<button class="w3-btn w3-green w3-right">Save</button>
-			</footer>
-		</div>
-	</div>
 
 	<script src="js/resolver.js"></script>
 	<script>
 		$(function(){
+			// show add complaint window
+			$("#btnAddComplaint").click(function(){
+				$("#addComplaintModel").show();
+			});
 
 			// close add complaint model
 			$("#clsmodelAddComplaint").click(function(){
